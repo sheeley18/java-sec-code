@@ -8,12 +8,9 @@ on:
     - master
 
 jobs:
-  wiz-cli-scan:
-    name: "Wiz-cli ${{ matrix.scan-type }} Scan"
+  wiz-scan:
+    name: "Wiz-cli Scan"
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        scan-type: [iac, dir]
     env:
       SCAN_PATH: "."
       
@@ -30,5 +27,8 @@ jobs:
           WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
           WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
 
-      - name: Run wiz CLI scan
-        run: ./wizcli ${{ matrix.scan-type }} scan --path $SCAN_PATH
+      - name: Run IaC scan
+        run: ./wizcli iac scan --path $SCAN_PATH 
+
+      - name: Run Dir scan
+        run: ./wizcli dir scan --path $SCAN_PATH
